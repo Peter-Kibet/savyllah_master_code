@@ -1,30 +1,41 @@
-document.getElementById("next").onclick = function () {
-  let lists = document.querySelectorAll(".item");
-  document.getElementById("slide").appendChild(lists[0]);
-};
-document.getElementById("prev").onclick = function () {
-  let lists = document.querySelectorAll(".item");
-  document.getElementById("slide").prepend(lists[lists.length - 1]);
-};
+let slider = document.querySelector(".slider .list");
+let items = document.querySelectorAll(".slider .list .item");
+let next = document.getElementById("next");
+let prev = document.getElementById("prev");
+let dots = document.querySelectorAll(".slider .dots li");
 
-// Function to click the next button
-function clickNextButton() {
-  const nextButton = document.getElementById("next");
-  nextButton.click();
+let lengthItems = items.length - 1;
+let active = 0;
+next.onclick = function () {
+  active = active + 1 <= lengthItems ? active + 1 : 0;
+  reloadSlider();
+};
+prev.onclick = function () {
+  active = active - 1 >= 0 ? active - 1 : lengthItems;
+  reloadSlider();
+};
+let refreshInterval = setInterval(() => {
+  next.click();
+}, 8000);
+function reloadSlider() {
+  slider.style.left = -items[active].offsetLeft + "px";
+  //
+  let last_active_dot = document.querySelector(".slider .dots li.active");
+  last_active_dot.classList.remove("active");
+  dots[active].classList.add("active");
+
+  clearInterval(refreshInterval);
+  refreshInterval = setInterval(() => {
+    next.click();
+  }, 8000);
 }
 
-// Function to automate the gallery slideshow
-function automateGallerySlideshow() {
-  // Initial delay before starting the slideshow
-  const initialDelay = 5000; // 5 seconds
-  setTimeout(() => {
-    // Click the next button
-    clickNextButton();
-
-    // Set interval to click the next button every 5 seconds
-    setInterval(clickNextButton, 5000); // 5 seconds
-  }, initialDelay);
-}
-
-// Call the function to start the automation
-automateGallerySlideshow();
+dots.forEach((li, key) => {
+  li.addEventListener("click", () => {
+    active = key;
+    reloadSlider();
+  });
+});
+window.onresize = function (event) {
+  reloadSlider();
+};
