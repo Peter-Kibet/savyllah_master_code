@@ -254,6 +254,24 @@
 .slider .dots li.active {
   width: 30px;
 }
+
+.social-icons ul li a {
+  color: #ff5f13; /* Set the desired icon color */
+  font-size: 1.5rem;
+}
+
+.social-icons ul li a:hover {
+  color: #ff8c00; /* Set the desired hover color */
+}
+
+.social-icons ul li a:focus {
+  color: #ff8c00; /* Set the desired focus color */
+}
+
+.social-icons ul li a:active {
+  color: #ff8c00; /* Set the desired active color */
+}
+
 @media screen and (max-width: 768px) {
   .slider {
     height: 400px;
